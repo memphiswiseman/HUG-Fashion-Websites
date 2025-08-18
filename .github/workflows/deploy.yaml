@@ -10,52 +10,52 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: Terraform   # folder containing your .tf files
+        working-directory: Terraform   # points to Terraform folder
 
     steps:
-      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Setup Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.6.6
 
-      # Step 3: Configure Terraform Cloud Token
-      - name: Configure Terraform Cloud Token
+      - name: Configure Terraform Cloud credentials
         run: |
           mkdir -p ~/.terraform.d
           cat > ~/.terraform.d/credentials.tfrc.json <<EOF
           {
             "credentials": {
               "app.terraform.io": {
-                "token": "${{ secrets.TFC_TOKEN }}"
+                "token": "${TFC_TOKEN}"
               }
             }
           }
           EOF
+        env:
+          TFC_TOKEN: ${{ secrets.TFC_TOKEN }}
 
-      # Step 4: Terraform Init
       - name: Terraform Init
+        env:
+          TF_CLI_CONFIG_FILE: ~/.terraform.d/credentials.tfrc.json
         run: terraform init
 
-      # Step 5: Terraform Plan
       - name: Terraform Plan
+        env:
+          TF_CLI_CONFIG_FILE: ~/.terraform.d/credentials.tfrc.json
         run: terraform plan
 
-      # Step 6: Terraform Apply (deploy to Netlify)
       - name: Terraform Apply
         env:
+          TF_CLI_CONFIG_FILE: ~/.terraform.d/credentials.tfrc.json
           NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
           TF_VAR_base_name: ${{ secrets.TF_VAR_base_name }}
         run: terraform apply -auto-approve
 
-      # Step 7: Show Netlify URL
       - name: Show Netlify URL
+        env:
+          TF_CLI_CONFIG_FILE: ~/.terraform.d/credentials.tfrc.json
         run: |
           SITE_NAME=$(terraform output -raw site_name)
           echo "✅ Your site is live at: https://${SITE_NAME}.netlify.app"
-
-          
