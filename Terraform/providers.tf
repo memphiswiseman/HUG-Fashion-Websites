@@ -5,7 +5,7 @@ provider "random" {}
 terraform { 
   cloud { 
     
-    organization = "hug-fashion-web"  # organization
+    organization = "hug-fashion-web"  
 
     workspaces { 
       name = "hug-fashion-websites" 
