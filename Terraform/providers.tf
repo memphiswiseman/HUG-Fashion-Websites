@@ -2,13 +2,13 @@ provider "netlify" {}
 
 provider "random" {}
 
-terraform { 
-  cloud { 
+#terraform { 
+#  cloud { 
     
-    organization = "hug-fashion-web"  
+#    organization = "hug-fashion-web"  
 
-    workspaces { 
-      name = "hug-fashion-websites" 
-    } 
-  } 
-}
+#    workspaces { 
+  #    name = "hug-fashion-websites" 
+   # } 
+#  } 
+#}
