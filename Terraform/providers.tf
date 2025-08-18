@@ -1,0 +1,3 @@
+provider "netlify" {}
+
+provider "random" {}
