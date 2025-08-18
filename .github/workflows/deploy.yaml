@@ -21,41 +21,26 @@ jobs:
         with:
           terraform_version: 1.6.6
 
-      - name: Configure Terraform Cloud credentials
-        run: |
-          mkdir -p ~/.terraform.d
-          cat > ~/.terraform.d/credentials.tfrc.json <<EOF
-          {
-            "credentials": {
-              "app.terraform.io": {
-                "token": "${TFC_TOKEN}"
-              }
-            }
-          }
-          EOF
-        env:
-          TFC_TOKEN: ${{ secrets.TFC_TOKEN }}
-
       - name: Terraform Init
         env:
-          TF_CLI_CONFIG_FILE: ~/.terraform.d/credentials.tfrc.json
+          TF_TOKEN_app_terraform_io: ${{ secrets.TFC_TOKEN }}
         run: terraform init
 
       - name: Terraform Plan
         env:
-          TF_CLI_CONFIG_FILE: ~/.terraform.d/credentials.tfrc.json
+          TF_TOKEN_app_terraform_io: ${{ secrets.TFC_TOKEN }}
         run: terraform plan
 
       - name: Terraform Apply
         env:
-          TF_CLI_CONFIG_FILE: ~/.terraform.d/credentials.tfrc.json
+          TF_TOKEN_app_terraform_io: ${{ secrets.TFC_TOKEN }}
           NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
           TF_VAR_base_name: ${{ secrets.TF_VAR_base_name }}
         run: terraform apply -auto-approve
 
       - name: Show Netlify URL
         env:
-          TF_CLI_CONFIG_FILE: ~/.terraform.d/credentials.tfrc.json
+          TF_TOKEN_app_terraform_io: ${{ secrets.TFC_TOKEN }}
         run: |
           SITE_NAME=$(terraform output -raw site_name)
           echo "✅ Your site is live at: https://${SITE_NAME}.netlify.app"
