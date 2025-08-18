@@ -10,35 +10,50 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: Terraform   # points to Terraform folder
+        working-directory: Terraform   # folder containing your .tf files
 
     steps:
+      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Step 2: Setup Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.6.6
 
+      # Step 3: Configure Terraform Cloud Token (non-interactive)
+      - name: Configure Terraform Cloud Token
+        run: |
+          mkdir -p ~/.terraform.d
+          echo '{
+            "credentials": {
+              "app.terraform.io": {
+                "token": "${{ secrets.TFC_TOKEN }}"
+              }
+            }
+          }' > ~/.terraform.d/credentials.tfrc.json
+
+      # Step 4: Terraform Init
       - name: Terraform Init
-        env:
-          TFC_TOKEN: ${{ secrets.TFC_TOKEN }}
         run: terraform init
 
+      # Step 5: Terraform Plan
       - name: Terraform Plan
-        env:
-          TFC_TOKEN: ${{ secrets.TFC_TOKEN }}
         run: terraform plan
 
+      # Step 6: Terraform Apply (deploy to Netlify)
       - name: Terraform Apply
         env:
-          TFC_TOKEN: ${{ secrets.TFC_TOKEN }}
           NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
           TF_VAR_base_name: ${{ secrets.TF_VAR_base_name }}
         run: terraform apply -auto-approve
 
+      # Step 7: Show Netlify URL
       - name: Show Netlify URL
         run: |
           SITE_NAME=$(terraform output -raw site_name)
           echo "✅ Your site is live at: https://${SITE_NAME}.netlify.app"
+
+          
