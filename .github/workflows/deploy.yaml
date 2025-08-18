@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: Terraform   # points to Terraform folder
+        working-directory: Terraform   # ✅ folder containing your .tf files
 
     steps:
       - name: Checkout repository
@@ -21,26 +21,27 @@ jobs:
         with:
           terraform_version: 1.6.6
 
+      # Authenticate Terraform Cloud
+      - name: Configure Terraform Cloud credentials
+        run: |
+          mkdir -p ~/.terraform.d
+          echo '{"credentials":{"app.terraform.io":{"token":"${{ secrets.TF_API_TOKEN }}"}}}' > ~/.terraform.d/credentials.tfrc.json
+
       - name: Terraform Init
-        env:
-          TF_TOKEN_app_terraform_io: ${{ secrets.TFC_TOKEN }}
         run: terraform init
 
       - name: Terraform Plan
         env:
-          TF_TOKEN_app_terraform_io: ${{ secrets.TFC_TOKEN }}
+          TF_VAR_netlify_token: ${{ secrets.NETLIFY_TOKEN }}
         run: terraform plan
 
       - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
         env:
-          TF_TOKEN_app_terraform_io: ${{ secrets.TFC_TOKEN }}
-          NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
-          TF_VAR_base_name: ${{ secrets.TF_VAR_base_name }}
+          TF_VAR_netlify_token: ${{ secrets.NETLIFY_TOKEN }}
         run: terraform apply -auto-approve
 
       - name: Show Netlify URL
-        env:
-          TF_TOKEN_app_terraform_io: ${{ secrets.TFC_TOKEN }}
         run: |
           SITE_NAME=$(terraform output -raw site_name)
           echo "✅ Your site is live at: https://${SITE_NAME}.netlify.app"

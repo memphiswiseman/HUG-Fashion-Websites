@@ -1,12 +1,10 @@
-variable "base_name" {
-  description = "Base name for the Netlify site (will be suffixed to ensure uniqueness)"
+variable "netlify_token" {
   type        = string
-  default     = "hug-fashion"
+  description = "Netlify personal access token"
+  sensitive   = true
 }
 
-variable "netlify_token" {
-  description = "Netlify Personal Access Token (use environment variable NETLIFY_TOKEN)"
+variable "base_name" {
   type        = string
-  sensitive   = true
-  default     = null
+  description = "Base name for Netlify site"
 }
