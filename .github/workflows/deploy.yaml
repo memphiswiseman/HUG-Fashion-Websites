@@ -23,17 +23,19 @@ jobs:
         with:
           terraform_version: 1.6.6
 
-      # Step 3: Configure Terraform Cloud Token (non-interactive)
+      # Step 3: Configure Terraform Cloud Token
       - name: Configure Terraform Cloud Token
         run: |
           mkdir -p ~/.terraform.d
-          echo '{
+          cat > ~/.terraform.d/credentials.tfrc.json <<EOF
+          {
             "credentials": {
               "app.terraform.io": {
                 "token": "${{ secrets.TFC_TOKEN }}"
               }
             }
-          }' > ~/.terraform.d/credentials.tfrc.json
+          }
+          EOF
 
       # Step 4: Terraform Init
       - name: Terraform Init
