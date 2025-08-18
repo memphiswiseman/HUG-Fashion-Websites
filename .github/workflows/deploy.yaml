@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: terraform   # 👈 points to your folder with .tf files
+        working-directory: Terraform   # 👈 points to your folder with .tf files
 
     steps:
       - name: Checkout repository
