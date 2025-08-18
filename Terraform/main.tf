@@ -1,21 +1,26 @@
+# Generate a random suffix for uniqueness
 resource "random_pet" "suffix" {
   length = 2
 }
 
+# Full site name
 locals {
-  site_name = "${local.base_name}-${random_pet.suffix.id}"
+  site_name = "${var.base_name}-${random_pet.suffix.id}"
 }
 
+# Create Netlify site
 resource "netlify_site" "site" {
   name = local.site_name
 }
 
+# Zip the site folder
 data "archive_file" "site_zip" {
   type        = "zip"
-  source_dir  = "${path.module}/../site"
+  source_dir  = "${path.module}/../site"      # adjust path to your website files
   output_path = "${path.module}/../build/site.zip"
 }
 
+# Deploy to Netlify
 resource "null_resource" "deploy" {
   triggers = {
     zip_sha  = data.archive_file.site_zip.output_sha
@@ -25,10 +30,6 @@ resource "null_resource" "deploy" {
   provisioner "local-exec" {
     command = <<EOT
       set -e
-      if [ -z "$NETLIFY_TOKEN" ]; then
-        echo "NETLIFY_TOKEN is not set" >&2
-        exit 1
-      fi
       curl -sSf \
         -H "Authorization: Bearer $NETLIFY_TOKEN" \
         -F "title=Terraform deploy" \

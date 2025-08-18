@@ -13,9 +13,9 @@ terraform {
   }
 
   cloud {
-    organization = "hug-fashion-web"   # <- literal string
+    organization = "hug-fashion-web"   # your TFC org
     workspaces {
-      name = "hug-fashion-websites"   # <- literal string
+      name = "hug-fashion-websites"    # your TFC workspace
     }
   }
 }

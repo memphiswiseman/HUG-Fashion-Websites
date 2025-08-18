@@ -1,14 +1,5 @@
-provider "netlify" {}
+provider "netlify" {
+  token = var.netlify_token
+}
 
 provider "random" {}
-
-#terraform { 
-#  cloud { 
-    
-#    organization = "hug-fashion-web"  
-
-#    workspaces { 
-  #    name = "hug-fashion-websites" 
-   # } 
-#  } 
-#}
