@@ -10,7 +10,3 @@ resource "netlify_deploy" "deploy" {
   site_id = netlify_site.site.id
   dir     = "../frontend"   # 🔹 adjust to your site folder
 }
-
-output "site_name" {
-  value = netlify_site.site.name
-}
