@@ -23,5 +23,5 @@ variable "site_name" {
 variable "site_source_path" {
   description = "Path to the static site source files"
   type        = string
-  default     = "./static"
+  default     = "./site"
 }
