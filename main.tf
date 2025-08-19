@@ -2,7 +2,7 @@ terraform {
   required_version = "~> 1.10"
   required_providers {
     netlify = {
-      source  = "alxhotel/netlify"
+      source  = "AegirHealth/netlify"
       version = "~> 0.5.0"
     }
   }
