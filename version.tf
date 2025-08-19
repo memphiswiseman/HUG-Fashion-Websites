@@ -2,7 +2,7 @@ terraform {
   required_providers {
     netlify = {
       source  = "netlify/netlify"
-      version = "~> 0.2"
+      version = "~> 0.2.3"
     }
     random = {
       source  = "hashicorp/random"
