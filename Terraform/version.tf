@@ -1,28 +1,19 @@
 terraform {
-  cloud {
-    organization = "hug-fashion-web"   # ✅ your TFC org
-
-    workspaces {
-      name = "hug-fashion-websites"    # ✅ your TFC workspace
-    }
-  }
-
   required_providers {
     netlify = {
       source  = "netlify/netlify"
-      version = "~> 0.1.0"   # ✅ latest stable
+      version = "~> 0.2"
     }
     random = {
       source  = "hashicorp/random"
-      version = "~> 3.5"
-    }
-    null = {
-      source  = "hashicorp/null"
-    }
-    archive = {
-      source  = "hashicorp/archive"
+      version = "~> 3.0"
     }
   }
 
-  required_version = ">= 1.6.0"
+  cloud {
+    organization = "netlify-org" # your HCP org name
+    workspaces {
+      name = "netlify-deploy"   # your HCP workspace
+    }
+  }
 }

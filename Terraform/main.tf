@@ -1,12 +1,25 @@
-resource "random_pet" "site_suffix" {
-  length = 2
+# Randomized site name
+resource "random_pet" "site" {}
+
+# Create a Netlify site
+resource "netlify_site" "demo" {
+  name = "challenge-site-${random_pet.site.id}"
 }
 
-resource "netlify_site" "site" {
-  name = "${var.base_name}-${random_pet.site_suffix.id}"
+# Deploy static files (from /static folder)
+resource "netlify_deploy" "demo" {
+  site_id = netlify_site.demo.id
+  dir     = "static"
 }
 
-resource "netlify_deploy" "deploy" {
-  site_id = netlify_site.site.id
-  dir     = "../frontend"   # 🔹 adjust to your site folder
+# Bonus: add an env var in Netlify
+resource "netlify_env_var" "example" {
+  site_id = netlify_site.demo.id
+  key     = "APP_MODE"
+  value   = "production"
+}
+
+# Output site URL
+output "site_url" {
+  value = netlify_site.demo.ssl_url
 }
