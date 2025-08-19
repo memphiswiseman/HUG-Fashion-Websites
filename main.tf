@@ -12,14 +12,14 @@ resource "netlify_deploy" "demo" {
   dir     = "static"
 }
 
-# Bonus: add an env var in Netlify
+# Optional: add an env var in Netlify
 resource "netlify_env_var" "example" {
   site_id = netlify_site.demo.id
   key     = "APP_MODE"
   value   = "production"
 }
 
-# Output site URL
+# Output live site URL
 output "site_url" {
-  value = netlify_site.demo.ssl_url #
+  value = netlify_site.demo.ssl_url
 }

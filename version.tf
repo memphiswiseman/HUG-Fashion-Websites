@@ -11,9 +11,9 @@ terraform {
   }
 
   cloud {
-    organization = "netlify-org" # your HCP org name
+    organization = hug-fashion-web  # replace with your HCP org
     workspaces {
-      name = "netlify-deploy"   # your HCP workspace
+      name = hug-fashion-websites  # replace with your HCP workspace
     }
   }
 }
