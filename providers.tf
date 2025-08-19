@@ -1,3 +1,3 @@
 provider "netlify" {
-  token = env("netlify_token")
+  token = var.netlify_token
 }
