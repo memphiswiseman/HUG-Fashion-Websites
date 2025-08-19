@@ -1,25 +1,33 @@
-# Randomized site name
-resource "random_pet" "site" {}
-
-# Create a Netlify site
-resource "netlify_site" "demo" {
-  name = "challenge-site-${random_pet.site.id}"
+terraform {
+  required_version = "~> 1.10"
+  required_providers {
+    netlify = {
+      source  = "alxhotel/netlify"
+      version = "~> 0.5.0"
+    }
+  }
+  cloud {
+    organization = var.hcp_terraform_org
+    workspaces {
+      name = var.hcp_terraform_workspace
+    }
+  }
 }
 
-# Deploy static files (from /static folder)
-resource "netlify_deploy" "demo" {
-  site_id = netlify_site.demo.id
-  dir     = "static"
+provider "netlify" {
+  token = var.netlify_token
 }
 
-# Optional: add an env var in Netlify
-resource "netlify_env_var" "example" {
-  site_id = netlify_site.demo.id
-  key     = "APP_MODE"
-  value   = "production"
+resource "netlify_site" "static_site" {
+  name = var.site_name
 }
 
-# Output live site URL
+resource "netlify_deploy" "static_site_deploy" {
+  site_id = netlify_site.static_site.id
+  path    = var.site_source_path
+}
+
 output "site_url" {
-  value = netlify_site.demo.ssl_url
+  description = "The live URL of the deployed Netlify site"
+  value       = "https://${netlify_site.static_site.name}.netlify.app"
 }

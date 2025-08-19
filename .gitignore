@@ -1,23 +1,15 @@
-# Terraform
-.terraform/
-.terraform.lock.hcl
+# Local Terraform files
 terraform.tfstate
 terraform.tfstate.backup
-crash.log
+terraform.tfstate.d/
+
+# Credentials and sensitive data
 *.tfvars
-*.tfvars.json
+.env
+credentials.tfrc.json
 
-# Local build/output
-/build/
-/dist/
-*.zip
-
-# OS / editor junk
+# Local build and cache
 .DS_Store
-Thumbs.db
 .vscode/
 .idea/
-
-# Env / secrets (never commit!)
-.env
-.env.*
+*.log
