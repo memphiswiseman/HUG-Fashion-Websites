@@ -13,7 +13,7 @@ terraform {
   cloud {
     organization = hug-fashion-web  # replace with your HCP org
     workspaces {
-      name = hug-fashion-websites  # replace with your HCP workspace
+      name = hug-fashion-websites  # 
     }
   }
 }
