@@ -21,5 +21,5 @@ resource "netlify_env_var" "example" {
 
 # Output site URL
 output "site_url" {
-  value = netlify_site.demo.ssl_url
+  value = netlify_site.demo.ssl_url #
 }
