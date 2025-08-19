@@ -14,12 +14,6 @@ variable "netlify_token" {
   sensitive   = true
 }
 
-variable "site_name" {
-  description = "Name for the Netlify site"
-  type        = string
-  default     = "my-static-site"
-}
-
 variable "site_source_path" {
   description = "Path to the static site source files"
   type        = string

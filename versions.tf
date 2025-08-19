@@ -3,8 +3,8 @@ terraform {
 
   required_providers {
     netlify = {
-      source  = "AegirHealth/netlify"
-      version = "0.6.12"
+      source  = "netlify/netlify"
+      version = "0.2.3"
     }
   }
 
