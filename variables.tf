@@ -1,4 +1,4 @@
-variable "netlify_api_token" {
+variable "netlify_token" {
   description = "Netlify API token for authentication"
   type        = string
   sensitive   = true

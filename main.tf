@@ -1,5 +1,5 @@
 provider "netlify" {
-  token = var.netlify_api_token
+  token = var.netlify_token
 }
 
 # Optional: get team
