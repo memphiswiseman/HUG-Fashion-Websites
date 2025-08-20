@@ -1,4 +1,9 @@
-output "netlify_site_url" {
-  description = "Live Netlify site URL"
-  value       = netlify_site.this.ssl_url
+output "site_url" {
+  description = "The URL of the Netlify site"
+  value       = "${var.site_name}.netlify.app"
+}
+
+output "site_id" {
+  description = "The ID of the Netlify site"
+  value       = data.netlify_site.this.id
 }

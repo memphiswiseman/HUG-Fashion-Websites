@@ -1,14 +1,15 @@
 provider "netlify" {
-  token = var.netlify_token
+  token = var.netlify_api_token
 }
 
-resource "netlify_site" "this" {
-  name = "hug-fashion"
+# Optional: get team if using a team account
+data "netlify_team" "default" {
+  count = var.netlify_team_slug != "" ? 1 : 0
+  slug  = var.netlify_team_slug
+}
 
-  repo {
-    provider      = "github"
-    branch        = var.github_branch 
-    build_command = ""                 
-    dir           = "site"             
-  }
+# Get the existing Netlify site
+data "netlify_site" "this" {
+  name      = var.site_name
+  team_slug = length(data.netlify_team.default) > 0 ? data.netlify_team.default[0].slug : null
 }
