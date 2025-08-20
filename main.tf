@@ -3,11 +3,11 @@ provider "netlify" {
 }
 
 resource "netlify_site" "this" {
-  name = "hug-fashion-websites"
+  name = "hug-fashion"
 
   repo {
     provider      = "github"
-    branch        = var.github_branch # optional
+    branch        = var.github_branch 
     build_command = ""                 
     dir           = "site"             
   }
