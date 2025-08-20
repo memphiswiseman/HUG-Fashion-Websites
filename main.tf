@@ -8,7 +8,7 @@ resource "netlify_site" "this" {
   repo {
     provider      = "github"
     branch        = var.github_branch # optional
-    build_command = ""                 # static HTML/CSS/JS, no build
-    dir           = "site"             # folder containing index.html
+    build_command = ""                 
+    dir           = "site"             
   }
 }
