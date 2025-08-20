@@ -1,8 +1,8 @@
 provider "netlify" {
-  token = var.netlify_token
+  token = var.netlify_api_token
 }
 
-# Optional: get team
+# Optional: get team if using a team account
 data "netlify_team" "default" {
   count = var.netlify_team_slug != "" ? 1 : 0
   slug  = var.netlify_team_slug
