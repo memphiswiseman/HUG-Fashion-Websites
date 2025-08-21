@@ -73,3 +73,14 @@ Functions directory: leave default
 
 Push changes to your GitHub repo — Netlify will automatically build and deploy your site.
 
+this push to github is one step, but the challenge said we should your apply screenshot so with the 
+
+push to github and pipeline automating deployment means your workspace is set to remote state (VCS)
+
+so advice your set your workspace to cli execution mode. with this you, you run your terraform init, 
+
+terraform plan, and terraform apply from local cli.
+
+Note: to use local cli, your will have create an API token in terraform cloud, and run terraform login 
+
+to link both local cli to terraform cloud.
