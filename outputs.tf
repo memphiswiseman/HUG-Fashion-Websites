@@ -1,6 +1,6 @@
 output "site_id" {
   description = "The Netlify site ID"
-  value       = data.netlify_site.this.id
+  value       = var.site_name   # Or leave blank if you don't need the ID
 }
 
 output "site_url" {
