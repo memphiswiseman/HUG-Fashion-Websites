@@ -1,11 +1,11 @@
 variable "netlify_api_token" {
-  description = "Your Netlify API token (keep this secret)"
+  description = "Netlify API token (keep this secret)"
   type        = string
   sensitive   = true
 }
 
 variable "site_name" {
-  description = "Exact Netlify site name as shown in the UI"
+  description = "Netlify site subdomain"
   type        = string
-  default     = "hug-fashion"
+  default     = "hug-fashion"  # Change to match your Netlify site
 }
