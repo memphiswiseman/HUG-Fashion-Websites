@@ -1,6 +1,6 @@
 output "site_url" {
   description = "The live URL of the Netlify site"
-  value       = data.netlify_site.this.ssl_url
+  value       = data.netlify_site.this.url
 }
 
 output "site_id" {
